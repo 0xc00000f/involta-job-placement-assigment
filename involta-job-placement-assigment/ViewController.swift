@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray2
+
+        let networkService = NetworkService()
+        networkService.getMessages()
     }
 
 }

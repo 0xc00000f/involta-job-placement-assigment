@@ -11,6 +11,8 @@
 		D70F350228267AA900A8EC8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F350128267AA900A8EC8F /* ViewController.swift */; };
 		D70F350728267AAB00A8EC8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D70F350628267AAB00A8EC8F /* Assets.xcassets */; };
 		D70F350A28267AAB00A8EC8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D70F350828267AAB00A8EC8F /* LaunchScreen.storyboard */; };
+		D7B2BD21282687AA005AEEB8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD20282687AA005AEEB8 /* NetworkService.swift */; };
+		D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD232826AB51005AEEB8 /* ResultModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,8 @@
 		D70F350628267AAB00A8EC8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D70F350928267AAB00A8EC8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D70F350B28267AAB00A8EC8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7B2BD20282687AA005AEEB8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D7B2BD232826AB51005AEEB8 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 		D70F34FC28267AA900A8EC8F /* involta-job-placement-assigment */ = {
 			isa = PBXGroup;
 			children = (
+				D7B2BD2228268BCE005AEEB8 /* Model */,
+				D7B2BD1F28268792005AEEB8 /* Network */,
 				D70F34FD28267AA900A8EC8F /* AppDelegate.swift */,
 				D70F350128267AA900A8EC8F /* ViewController.swift */,
 				D70F350628267AAB00A8EC8F /* Assets.xcassets */,
@@ -59,6 +65,22 @@
 				D70F350B28267AAB00A8EC8F /* Info.plist */,
 			);
 			path = "involta-job-placement-assigment";
+			sourceTree = "<group>";
+		};
+		D7B2BD1F28268792005AEEB8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD20282687AA005AEEB8 /* NetworkService.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		D7B2BD2228268BCE005AEEB8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD232826AB51005AEEB8 /* ResultModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,7 +153,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */,
 				D70F350228267AA900A8EC8F /* ViewController.swift in Sources */,
+				D7B2BD21282687AA005AEEB8 /* NetworkService.swift in Sources */,
 				D70F34FE28267AA900A8EC8F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
