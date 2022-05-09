@@ -15,6 +15,7 @@
 		D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD232826AB51005AEEB8 /* ResultModel.swift */; };
 		D7B2BD2B2826BDB8005AEEB8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */; };
 		D7B2BD7328289039005AEEB8 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD7228289039005AEEB8 /* LoadingCell.swift */; };
+		D7B2BD7528294A73005AEEB8 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		D7B2BD232826AB51005AEEB8 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
 		D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		D7B2BD7228289039005AEEB8 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */,
+				D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 			files = (
 				D7B2BD7328289039005AEEB8 /* LoadingCell.swift in Sources */,
 				D7B2BD2B2826BDB8005AEEB8 /* UIView+Extension.swift in Sources */,
+				D7B2BD7528294A73005AEEB8 /* UITableView+Extension.swift in Sources */,
 				D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */,
 				D70F350228267AA900A8EC8F /* MessagesViewController.swift in Sources */,
 				D7B2BD21282687AA005AEEB8 /* NetworkService.swift in Sources */,

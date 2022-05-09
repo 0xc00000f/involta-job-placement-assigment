@@ -62,31 +62,28 @@ extension MessagesViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
 
-//        print("offsetY: \(offsetY), \(scrollView.bounds.size.height / 10)")
-//        if offsetY < -scrollView.bounds.size.height / 10 {
-//            print("beginBatchFetch")
-//        }
-
-        if offsetY > contentHeight - scrollView.frame.height {
+        print("offsetY: \(offsetY), \(scrollView.bounds.size.height / 10)")
+        if offsetY < -scrollView.bounds.size.height / 10 {
             if !fetchingMore {
-                beginBatchFetch()
+                beginBatchFetch(completion: {
+                    (scrollView as? UITableView)?.insertItemsAtTopWithFixedPosition(12, inSection: 1)
+                })
             }
         }
     }
 
-    func beginBatchFetch() {
+    func beginBatchFetch(completion: @escaping () -> Void) {
         fetchingMore = true
         print("beginBatchFetch!")
-        messagesTableView.reloadSections(IndexSet(integer: 1), with: .none)
-
+        messagesTableView.reloadSections(IndexSet(integer: 0), with: .none)
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             let newItems = (self.items.count...self.items.count + 12).map { index in index }
-            self.items.append(contentsOf: newItems)
+            self.items.insert(contentsOf: newItems.reversed(), at: 0)
             self.fetchingMore = false
             self.messagesTableView.reloadData()
+            completion()
         }
     }
 
@@ -95,22 +92,22 @@ extension MessagesViewController: UITableViewDelegate {
 extension MessagesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return items.count
-        } else if section == 1 && fetchingMore {
+        if section == 0 && fetchingMore {
             return 1
+        } else if section == 1 {
+            return items.count
         }
         return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier, for: indexPath)
-            cell.textLabel?.text = "Item \(items[indexPath.row])"
-            return cell
-        } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: LoadingCell.identifier, for: indexPath) as! LoadingCell
             cell.startSpinnerAnimation()
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier, for: indexPath)
+            cell.textLabel?.text = "Item \(items[indexPath.row])"
             return cell
         }
     }
