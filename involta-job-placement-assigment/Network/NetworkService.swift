@@ -7,23 +7,33 @@
 
 import Foundation
 
+enum NetworkServiceError: Error {
+    case noData
+}
+
 class NetworkService {
 
-    private var urlString = "https://numero-logy-app.org.in/getMessages?offset=0"
+    private var urlString = "https://numero-logy-app.org.in/getMessages?offset="
 
-    func getMessages() {
-        guard let url = URL(string: urlString) else { return }
+    func getMessages(offset: Int, completion: @escaping ([String], Error?) -> Void) {
+        guard let url = URL(string: urlString + "\(offset)") else { return }
 
         let session = URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("There was an error: \(error.localizedDescription)")
+                completion([], error)
                 return
             }
             do {
-                let jsonRes = try? JSONDecoder().decode(Result.self, from: data!)
+                guard let data = data else {
+                    completion([], NetworkServiceError.noData)
+                    return
+                }
+                let jsonRes = try JSONDecoder().decode(Result.self, from: data)
+                completion(jsonRes.result, nil)
             }
             catch {
-                print("Error")
+                completion([], error)
             }
         }
         session.resume()

@@ -8,22 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		D70F34FE28267AA900A8EC8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F34FD28267AA900A8EC8F /* AppDelegate.swift */; };
-		D70F350228267AA900A8EC8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F350128267AA900A8EC8F /* ViewController.swift */; };
+		D70F350228267AA900A8EC8F /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D70F350128267AA900A8EC8F /* MessagesViewController.swift */; };
 		D70F350728267AAB00A8EC8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D70F350628267AAB00A8EC8F /* Assets.xcassets */; };
 		D70F350A28267AAB00A8EC8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D70F350828267AAB00A8EC8F /* LaunchScreen.storyboard */; };
 		D7B2BD21282687AA005AEEB8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD20282687AA005AEEB8 /* NetworkService.swift */; };
 		D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD232826AB51005AEEB8 /* ResultModel.swift */; };
+		D7B2BD2B2826BDB8005AEEB8 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */; };
+		D7B2BD7328289039005AEEB8 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD7228289039005AEEB8 /* LoadingCell.swift */; };
+		D7B2BD7528294A73005AEEB8 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */; };
+		D7D102F6282C2D8E00D4A65D /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D102F5282C2D8E00D4A65D /* MessageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D70F34FA28267AA900A8EC8F /* involta-job-placement-assigment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "involta-job-placement-assigment.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70F34FD28267AA900A8EC8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D70F350128267AA900A8EC8F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D70F350128267AA900A8EC8F /* MessagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
 		D70F350628267AAB00A8EC8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D70F350928267AAB00A8EC8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D70F350B28267AAB00A8EC8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7B2BD20282687AA005AEEB8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D7B2BD232826AB51005AEEB8 /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
+		D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		D7B2BD7228289039005AEEB8 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		D7D102F5282C2D8E00D4A65D /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,10 +64,11 @@
 		D70F34FC28267AA900A8EC8F /* involta-job-placement-assigment */ = {
 			isa = PBXGroup;
 			children = (
+				D7B2BD292826BDA4005AEEB8 /* Extension */,
+				D7B2BD252826BB88005AEEB8 /* Scenario */,
 				D7B2BD2228268BCE005AEEB8 /* Model */,
 				D7B2BD1F28268792005AEEB8 /* Network */,
 				D70F34FD28267AA900A8EC8F /* AppDelegate.swift */,
-				D70F350128267AA900A8EC8F /* ViewController.swift */,
 				D70F350628267AAB00A8EC8F /* Assets.xcassets */,
 				D70F350828267AAB00A8EC8F /* LaunchScreen.storyboard */,
 				D70F350B28267AAB00A8EC8F /* Info.plist */,
@@ -81,6 +90,41 @@
 				D7B2BD232826AB51005AEEB8 /* ResultModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D7B2BD252826BB88005AEEB8 /* Scenario */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD262826BBC0005AEEB8 /* ShowMessages */,
+			);
+			path = Scenario;
+			sourceTree = "<group>";
+		};
+		D7B2BD262826BBC0005AEEB8 /* ShowMessages */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD7128289013005AEEB8 /* ViewHelpers */,
+				D70F350128267AA900A8EC8F /* MessagesViewController.swift */,
+			);
+			path = ShowMessages;
+			sourceTree = "<group>";
+		};
+		D7B2BD292826BDA4005AEEB8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD2A2826BDB8005AEEB8 /* UIView+Extension.swift */,
+				D7B2BD7428294A73005AEEB8 /* UITableView+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		D7B2BD7128289013005AEEB8 /* ViewHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				D7B2BD7228289039005AEEB8 /* LoadingCell.swift */,
+				D7D102F5282C2D8E00D4A65D /* MessageCell.swift */,
+			);
+			path = ViewHelpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -153,8 +197,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7B2BD7328289039005AEEB8 /* LoadingCell.swift in Sources */,
+				D7D102F6282C2D8E00D4A65D /* MessageCell.swift in Sources */,
+				D7B2BD2B2826BDB8005AEEB8 /* UIView+Extension.swift in Sources */,
+				D7B2BD7528294A73005AEEB8 /* UITableView+Extension.swift in Sources */,
 				D7B2BD242826AB51005AEEB8 /* ResultModel.swift in Sources */,
-				D70F350228267AA900A8EC8F /* ViewController.swift in Sources */,
+				D70F350228267AA900A8EC8F /* MessagesViewController.swift in Sources */,
 				D7B2BD21282687AA005AEEB8 /* NetworkService.swift in Sources */,
 				D70F34FE28267AA900A8EC8F /* AppDelegate.swift in Sources */,
 			);
