@@ -9,7 +9,11 @@ import UIKit
 
 class LoadingCell: UITableViewCell {
 
-    private let spinner = UIActivityIndicatorView()
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,7 +28,17 @@ class LoadingCell: UITableViewCell {
 
     private func setupSpinner() {
         contentView.addSubview(spinner)
-        spinner.center = self.contentView.center
+
+        let offset: CGFloat = 8
+
+        NSLayoutConstraint.activate([
+            spinner.topAnchor.constraint(equalTo: contentView.topAnchor, constant: offset),
+            spinner.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: offset),
+            spinner.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -offset),
+            spinner.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -offset),
+            spinner.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
 
     func startSpinnerAnimation() {

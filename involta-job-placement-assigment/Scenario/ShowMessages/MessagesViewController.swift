@@ -9,12 +9,11 @@ import UIKit
 
 class MessagesViewController: UIViewController {
 
-    private var items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,]
-    private var fetchingMore = false
-    private var networkService: NetworkService = {
-        let networkService = NetworkService()
-        return networkService
-    }()
+    private var items: [String] = []
+    private var isFetching = false
+    private var canFetchMore = true
+    private let networkService = NetworkService()
+    private let pageSize = 20
 
     lazy var messagesTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -24,22 +23,20 @@ class MessagesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
+        tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.identifier)
         tableView.register(LoadingCell.self, forCellReuseIdentifier: LoadingCell.identifier)
         return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemGray2
-
         setupLayout()
-
+        uploadData(to: self.messagesTableView)
     }
 
     private func setupLayout() {
         view.addSubview(messagesTableView)
-
+        view.backgroundColor = .clear
         NSLayoutConstraint.activate([
             messagesTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             messagesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -47,7 +44,6 @@ class MessagesViewController: UIViewController {
             messagesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
 }
 
 extension MessagesViewController: UITableViewDelegate {
@@ -62,53 +58,111 @@ extension MessagesViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
+        print("offsetY: \(offsetY), -scrollView.bounds.size.height / 6: \(-scrollView.bounds.size.height / 6)")
 
-        print("offsetY: \(offsetY), \(scrollView.bounds.size.height / 10)")
-        if offsetY < -scrollView.bounds.size.height / 10 {
-            if !fetchingMore {
-                beginBatchFetch(completion: {
-                    (scrollView as? UITableView)?.insertItemsAtTopWithFixedPosition(12, inSection: 1)
-                })
+        if offsetY < -scrollView.bounds.size.height / 6 {
+            cancelCurrentSwipe(of: scrollView)
+            uploadData(to: scrollView)
+        }
+    }
+
+    func uploadData(to scrollView: UIScrollView) {
+        if !isFetching {
+            beginBatchFetch {[weak self] isFirstBatch, isCancelledCauseError in
+                guard let self = self else { return }
+
+                DispatchQueue.main.async {
+                    scrollView.setContentOffset(scrollView.contentOffset, animated:false)
+                    switch isCancelledCauseError {
+                    case false:
+                        (scrollView as? UITableView)?.insertItemsAtTopWithFixedPosition(
+                            isFirstBatch ? self.pageSize - 1 : self.canFetchMore ? self.pageSize - 2 : self.items.count % self.pageSize,
+                            inSection: Section.messages.rawValue
+                        )
+                    case true:
+                        self.showErrorAlertController()
+                    }
+                    self.isFetching = false
+                    self.messagesTableView.reloadData()
+                }
             }
         }
     }
 
-    func beginBatchFetch(completion: @escaping () -> Void) {
-        fetchingMore = true
-        print("beginBatchFetch!")
-        messagesTableView.reloadSections(IndexSet(integer: 0), with: .none)
+    func cancelCurrentSwipe(of scrollView: UIScrollView) {
+        scrollView.panGestureRecognizer.isEnabled = false
+        scrollView.panGestureRecognizer.isEnabled = true
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            let newItems = (self.items.count...self.items.count + 12).map { index in index }
-            self.items.insert(contentsOf: newItems.reversed(), at: 0)
-            self.fetchingMore = false
-            self.messagesTableView.reloadData()
-            completion()
-        }
+        scrollView.isUserInteractionEnabled = false
+        scrollView.isUserInteractionEnabled = true
     }
 
+    func beginBatchFetch(completion: @escaping (_ isFirstBatch: Bool, _ isCancelledCauseError: Bool) -> Void) {
+        let isFirstBatch = self.items.count == 0 ? true : false
+        isFetching = true
+
+        if canFetchMore {
+            DispatchQueue.main.async {
+                self.messagesTableView.reloadSections(IndexSet(integer: Section.loading.rawValue), with: .none)
+            }
+            networkService.getMessages(offset: items.count) { [weak self] messages, error in
+                guard let self = self else {
+                    completion(isFirstBatch, true)
+                    return
+                }
+                if error != nil {
+                    completion(isFirstBatch, true)
+                    return
+                }
+                DispatchQueue.main.async{
+                    self.items.insert(contentsOf: messages.reversed(), at: 0)
+                    if messages.count < self.pageSize {
+                        self.canFetchMore = false
+                    }
+                    completion(isFirstBatch, false)
+                }
+            }}
+    }
+
+    func showErrorAlertController() {
+        let errorAlertController: UIAlertController = UIAlertController(title: "Error", message: "An error occurred while loading data", preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        errorAlertController.addAction(cancelAction)
+        let retryAction: UIAlertAction = UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            self.uploadData(to: self.messagesTableView)
+        }
+        errorAlertController.addAction(retryAction)
+        DispatchQueue.main.async {
+            self.present(errorAlertController, animated: true, completion: nil)
+        }
+    }
 }
 
 extension MessagesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 && fetchingMore {
+        if section == Section.loading.rawValue && isFetching {
             return 1
-        } else if section == 1 {
+        } else if section == Section.messages.rawValue {
             return items.count
         }
         return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case Section.loading.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: LoadingCell.identifier, for: indexPath) as! LoadingCell
             cell.startSpinnerAnimation()
             return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier, for: indexPath)
-            cell.textLabel?.text = "Item \(items[indexPath.row])"
+        case Section.messages.rawValue:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.identifier, for: indexPath) as! MessageCell
+            cell.messageLabel.preferredMaxLayoutWidth = tableView.bounds.width
+            cell.messageLabel.text = "\(items[indexPath.row])"
             return cell
+        default:
+            return UITableViewCell()
         }
     }
 
@@ -132,4 +186,9 @@ extension MessagesViewController: UITableViewDataSource {
         nil
     }
 
+}
+
+fileprivate enum Section: Int {
+    case loading = 0
+    case messages
 }
