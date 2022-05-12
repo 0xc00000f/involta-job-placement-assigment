@@ -10,3 +10,7 @@
 "error.load.message" = "An error occurred while loading data";
 "error.load.cancel" = "Cancel";
 "error.load.retry" = "Retry";
+
+"error.data.out.title" = "Oops!";
+"error.data.out.message" = "An error occurred due to out of data";
+"error.data.out.cancel" = "Cancel";
