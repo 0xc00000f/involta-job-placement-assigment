@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  involta-job-placement-assigment
+
+  Created by Maxim Tsyganov on 12.05.2022.
+  
+*/
+
+"error.load.title" = "Oops!";
+"error.load.message" = "An error occurred while loading data";
+"error.load.cancel" = "Cancel";
+"error.load.retry" = "Retry";

@@ -125,10 +125,15 @@ extension MessagesViewController: UITableViewDelegate {
     }
 
     func showErrorAlertController() {
-        let errorAlertController: UIAlertController = UIAlertController(title: "Error", message: "An error occurred while loading data", preferredStyle: .alert)
-        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let alertTitle = NSLocalizedString("error.load.title", comment: "")
+        let alertMessage = NSLocalizedString("error.load.message", comment: "")
+        let cancelActionText = NSLocalizedString("error.load.cancel", comment: "")
+        let retryActionText = NSLocalizedString("error.load.retry", comment: "")
+
+        let errorAlertController: UIAlertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: cancelActionText, style: .cancel, handler: nil)
         errorAlertController.addAction(cancelAction)
-        let retryAction: UIAlertAction = UIAlertAction(title: "Retry", style: .default) { [weak self] _ in
+        let retryAction: UIAlertAction = UIAlertAction(title: retryActionText, style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.uploadData(to: self.messagesTableView)
         }
@@ -154,12 +159,14 @@ extension MessagesViewController: UITableViewDataSource {
         switch indexPath.section {
         case Section.loading.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: LoadingCell.identifier, for: indexPath) as! LoadingCell
+            cell.selectionStyle = .none
             cell.startSpinnerAnimation()
             return cell
         case Section.messages.rawValue:
             let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.identifier, for: indexPath) as! MessageCell
             cell.messageLabel.preferredMaxLayoutWidth = tableView.bounds.width
             cell.messageLabel.text = "\(items[indexPath.row])"
+            cell.selectionStyle = .none
             return cell
         default:
             return UITableViewCell()

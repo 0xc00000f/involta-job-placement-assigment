@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  involta-job-placement-assigment
+
+  Created by Maxim Tsyganov on 12.05.2022.
+  
+*/
+
+"error.load.title" = "Упс!";
+"error.load.message" = "Обнаружена ошибка при попытке загрузки данных с удаленного сервера";
+"error.load.cancel" = "Отменить";
+"error.load.retry" = "Повторить";
