@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  involta-job-placement-assigment
+
+  Created by Maxim Tsyganov on 12.05.2022.
+  
+*/
+
+"CFBundleDisplayName" = "Инвольта";
+"NSHumanReadableCopyright" = "2022 Maxon Prod Inc. All rights reserved.";
