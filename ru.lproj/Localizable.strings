@@ -10,3 +10,7 @@
 "error.load.message" = "Обнаружена ошибка при попытке загрузки данных с удаленного сервера";
 "error.load.cancel" = "Отменить";
 "error.load.retry" = "Повторить";
+
+"error.data.out.title" = "Упс!";
+"error.data.out.message" = "Новых сообщений нет";
+"error.data.out.cancel" = "Отменить";
