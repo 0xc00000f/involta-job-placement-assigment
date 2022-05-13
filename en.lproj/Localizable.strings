@@ -13,4 +13,4 @@
 
 "error.data.out.title" = "Oops!";
 "error.data.out.message" = "An error occurred due to out of data";
-"error.data.out.cancel" = "Cancel";
+"error.data.out.cancel" = "OK";
